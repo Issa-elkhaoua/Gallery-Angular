@@ -1,0 +1,19 @@
+<div class="container my-4">
+  <div class="row mb-3">
+    <div class="col">
+      <input type="file" class="form-control" (change)="onFileSelected($event)" accept=".obj">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary" (click)="onUpload()">Upload</button>
+    </div>
+  </div>
+
+  <div class="gallery">
+    <div *ngFor="let img of _album; let i = index" (click)="open(i)">
+      <div *ngIf="isLoading" class="loading-icon">Chargement...</div>
+
+      <img [src]="img.src" [alt]="img.caption" (load)="imageLoaded()">
+    </div>
+  </div>
+  
+</div>
