@@ -18,7 +18,9 @@ export class ResultSearchComponent implements OnInit{
     ) {
     this.resultArray = this.sharedDataService.sharedResultArray;
     for (let imagePath of this.resultArray) {
-      const src = `assets/tb/${imagePath}.jpg`;
+      const imagePathWithJpg = imagePath.replace('.obj', '.jpg');
+  
+  const src = `assets/tb/${imagePathWithJpg}`;
       const caption = 'Image caption here';
       const thumb = imagePath;
       const album = {

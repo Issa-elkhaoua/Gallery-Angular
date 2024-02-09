@@ -102,23 +102,36 @@ export class PhotoGalleryComponent implements OnInit {
   onUpload(): void {
     if (this.selectedFile) {
       const formData = new FormData();
-      formData.append('file', this.selectedFile, this.selectedFile.name);
-  
-      this.http.post<any>('http://localhost:5000/upload', formData)
-        .subscribe(response => {
-          console.log('Upload successful', response);
-  
-          if (response.result) {
-  
-            this.sharedDataService.sharedResultArray = response.result;
-            this.router.navigate(['/result-search']);
+      formData.append('model_file', this.selectedFile, this.selectedFile.name);
 
+      this.http.post<any>('http://localhost:5000/find_similar', formData)
+  .subscribe(response => {
+    //console.log('Upload successful', response);
 
-            console.log('Result Array:', this.sharedDataService.sharedResultArray);
-          }
-        }, error => {
-          console.error('Upload failed', error);
-        });
+    response.forEach((item: { model_file_path: string; }) => {
+      // Extract the model_file_path and push it into sharedResultArray
+      console.log('Upload successful',item.model_file_path);
+    });
+
+    if (response) {
+      // Initialize sharedResultArray as an empty array
+      this.sharedDataService.sharedResultArray = [];
+
+      // Loop through each item in the result array
+      response.forEach((item: { model_file_path: string; }) => {
+        // Extract the model_file_path and push it into sharedResultArray
+        this.sharedDataService.sharedResultArray.push(item.model_file_path);
+      });
+
+      // Navigate to the result-search page
+      this.router.navigate(['/result-search']);
+
+      console.log('Result Array:', this.sharedDataService.sharedResultArray);
+    }
+  }, error => {
+    console.error('Upload failed', error);
+  });
+
     }
   }
   
