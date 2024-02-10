@@ -16,6 +16,7 @@ export class PhotoGalleryComponent implements OnInit {
    _album: any[] = [];
    isLoading = true; 
    resultArray!: string[]
+   isLoadingapi = false;
 
   selectedFile: File | null = null;
 
@@ -104,31 +105,35 @@ export class PhotoGalleryComponent implements OnInit {
       const formData = new FormData();
       formData.append('model_file', this.selectedFile, this.selectedFile.name);
 
+      this.isLoadingapi = true;
+
+
       this.http.post<any>('http://localhost:5000/find_similar', formData)
   .subscribe(response => {
-    //console.log('Upload successful', response);
 
-    response.forEach((item: { model_file_path: string; }) => {
-      // Extract the model_file_path and push it into sharedResultArray
-      console.log('Upload successful',item.model_file_path);
-    });
+    this.isLoadingapi = false;
 
     if (response) {
-      // Initialize sharedResultArray as an empty array
-      this.sharedDataService.sharedResultArray = [];
 
-      // Loop through each item in the result array
-      response.forEach((item: { model_file_path: string; }) => {
-        // Extract the model_file_path and push it into sharedResultArray
+      this.sharedDataService.sharedResultArray = [];
+      this.sharedDataService.sharedElasticArray = [];
+      this.sharedDataService.sharedEuclideanArray = [];
+
+      response.forEach((item: { model_file_path: string; elastic_matching_distance:string; euclidean_distance: string }) => {
         this.sharedDataService.sharedResultArray.push(item.model_file_path);
+        this.sharedDataService.sharedElasticArray.push(item.elastic_matching_distance);
+        this.sharedDataService.sharedEuclideanArray.push(item.euclidean_distance);
+
       });
 
-      // Navigate to the result-search page
       this.router.navigate(['/result-search']);
 
       console.log('Result Array:', this.sharedDataService.sharedResultArray);
+
     }
   }, error => {
+    this.isLoadingapi = false;
+
     console.error('Upload failed', error);
   });
 

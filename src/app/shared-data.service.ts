@@ -6,4 +6,7 @@ import { Injectable } from '@angular/core';
 export class SharedDataService {
 
   sharedResultArray: string[] = [];
+  sharedElasticArray: string[] = [];
+  sharedEuclideanArray: string[] = [];
+
 }

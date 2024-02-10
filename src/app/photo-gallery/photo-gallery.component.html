@@ -17,3 +17,13 @@
   </div>
   
 </div>
+
+
+<!-- Modèle de chargement -->
+<div *ngIf="isLoadingapi" class="loading-backdrop">
+  <div class="loading-spinner">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Chargement...</span>
+    </div>
+  </div>
+</div>

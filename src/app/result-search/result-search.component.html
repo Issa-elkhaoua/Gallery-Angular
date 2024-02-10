@@ -1,7 +1,20 @@
-<div class="gallery">
-  <div *ngFor="let img of _album; let i = index" (click)="open(i)">
-    <div *ngIf="isLoading" class="loading-icon">Chargement...</div>
-
-    <img [src]="img.src" [alt]="img.caption" (load)="imageLoaded()">
+<div class="container mt-3">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+    <div *ngFor="let img of _album; let i = index" class="col">
+      <div class="card h-100" (click)="open(i)">
+        <img [src]="img.src" [alt]="img.caption" class="card-img-top" (load)="imageLoaded()">
+        <div *ngIf="isLoading" class="loading-icon">Chargement...</div>
+        <div class="card-body">
+          <p class="card-text">
+            <span class="distance-label">Elastic Matching Distance:</span>
+            <span class="distance-value">{{elasticArray[i]}}</span>
+          </p>
+          <p class="card-text">
+            <span class="distance-label">Euclidean Distance:</span>
+            <span class="distance-value">{{euclideanArray[i]}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

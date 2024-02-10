@@ -1,45 +1,79 @@
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-gap: 15px;
-    padding: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 15px;
+  padding: 15px;
+}
+
+.gallery div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f9f9f9; /* Arrière-plan plus clair pour chaque élément */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow .3s ease;
+}
+
+.gallery div:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform .3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+/* Amélioration du style pour les informations de distance */
+.distance-info {
+  width: 100%;
+  text-align: center; /* Centre le texte sous l'image */
+  font-size: 14px; /* Taille de police ajustée pour les informations */
+  color: #333; /* Couleur du texte plus sombre pour une meilleure lisibilité */
+  margin-top: 5px; /* Espace entre l'image et les informations */
+}
+
+.loading-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  font-size: 20px;
+  color: #fff;
+  background-color: #333;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0.5;
   }
-  
-  .gallery img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform .3s ease, box-shadow .3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .gallery img:hover {
-    transform: scale(1.03);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-  }
-  
-  /* Style pour l'icône ou le texte de chargement */
-  .loading-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100px; /* Hauteur ajustable selon vos besoins */
-    font-size: 20px; /* Taille de la police */
-    color: #fff; /* Couleur du texte */
-    background-color: #333; /* Couleur d'arrière-plan */
-    border-radius: 10px; /* Bords arrondis */
-    margin-bottom: 15px; /* Marge au bas de l'élément de chargement */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Ombre portée (optionnel) */
-    animation: blinker 1.5s linear infinite; /* Animation clignotante (optionnel) */
-  }
-  
-  /* Animation clignotante pour le texte */
-  @keyframes blinker {
-    50% {
-      opacity: 0.5;
-    }
-  }
-  
+}
+
+.card-text {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem; /* Réduit légèrement la taille de la police pour la clarté */
+}
+
+.card-text .distance-label {
+  font-weight: bold; /* Mettre en évidence l'étiquette de distance */
+  color: #555; /* Assombrir la couleur pour l'étiquette pour attirer l'attention */
+}
+
+.card-text .distance-value {
+  font-family: 'Courier New', monospace; /* Utiliser une police à chasse fixe pour les valeurs numériques */
+  color: #333; /* Couleur standard pour la valeur numérique */
+}

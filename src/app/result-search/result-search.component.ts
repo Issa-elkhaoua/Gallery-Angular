@@ -10,6 +10,8 @@ import { Lightbox } from 'ngx-lightbox';
 export class ResultSearchComponent implements OnInit{
 
   resultArray!: string[];
+  elasticArray!: string[] ;
+  euclideanArray!: string[] ;
   _album: any[] = [];
   isLoading = true; 
 
@@ -17,6 +19,8 @@ export class ResultSearchComponent implements OnInit{
     private lightbox: Lightbox,
     ) {
     this.resultArray = this.sharedDataService.sharedResultArray;
+    this.elasticArray = this.sharedDataService.sharedElasticArray;
+    this.euclideanArray = this.sharedDataService.sharedEuclideanArray;
     for (let imagePath of this.resultArray) {
       const imagePathWithJpg = imagePath.replace('.obj', '.jpg');
   
