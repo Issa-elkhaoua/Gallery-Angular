@@ -114,22 +114,20 @@ export class PhotoGalleryComponent implements OnInit {
     this.isLoadingapi = false;
 
     if (response) {
-
       this.sharedDataService.sharedResultArray = [];
       this.sharedDataService.sharedElasticArray = [];
       this.sharedDataService.sharedEuclideanArray = [];
-
+    
       response.forEach((item: { model_file_path: string; elastic_matching_distance:string; euclidean_distance: string }) => {
-        this.sharedDataService.sharedResultArray.push(item.model_file_path);
+        // Utilisation de la fonction pour transformer le chemin du fichier
+        const modifiedPath = this.capitalizeModelFilePath(item.model_file_path);
+        this.sharedDataService.sharedResultArray.push(modifiedPath);
         this.sharedDataService.sharedElasticArray.push(item.elastic_matching_distance);
         this.sharedDataService.sharedEuclideanArray.push(item.euclidean_distance);
-
       });
-
+    
       this.router.navigate(['/result-search']);
-
       console.log('Result Array:', this.sharedDataService.sharedResultArray);
-
     }
   }, error => {
     this.isLoadingapi = false;
@@ -137,6 +135,20 @@ export class PhotoGalleryComponent implements OnInit {
     console.error('Upload failed', error);
   });
 
+    }
+  }
+
+  private capitalizeModelFilePath(filePath: string): string {
+    const parts = filePath.split('\\');
+    if (parts.length > 1) {
+      const fileParts = parts[parts.length - 1].split('.');
+      if (fileParts[0]) {
+        fileParts[0] = fileParts[0].charAt(0).toUpperCase() + fileParts[0].slice(1).toLowerCase();
+        parts[parts.length - 1] = fileParts.join('.');
+      }
+      return parts.join('\\');
+    } else {
+      return filePath.charAt(0).toUpperCase() + filePath.slice(1).toLowerCase();
     }
   }
   
